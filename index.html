@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ứng dụng Banking</title>
+</head>
+<body>
+    <table border="1">
+        <caption>Ứng dụng Banking</caption>
+        <tr>
+            <td>Số tiền gửi (VNĐ)</td>
+            <td>
+                <input type="number" id="soTienGui" placeholder="Nhập số tiền">
+            </td>
+        </tr>
+        <tr>
+            <td>Số tháng gửi</td>
+            <td>
+                <input type="number" id="soThangGui" value="6" min="1">
+            </td>
+        </tr>
+        <tr>
+            <td>Lãi suất năm (%)</td>
+            <td>
+                <select id="laiSuat">
+                    <option value="1">1%</option>
+                    <option value="5">5%</option>
+                    <option value="10">10%</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>Kết quả</td>
+            <td id="ketQua">---</td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <button onclick="tinhLai()">Tính lãi</button>
+            </td>
+        </tr>
+    </table>
+
+    <script>
+        function tinhLai() {
+            // Lấy giá trị từ các input
+            const soTien = Number(document.getElementById('soTienGui').value);
+            const soThang = Number(document.getElementById('soThangGui').value);
+            const laiSuatNam = Number(document.getElementById('laiSuat').value);
+
+            // Kiểm tra dữ liệu nhập vào
+            if (!soTien || !soThang || !laiSuatNam) {
+                document.getElementById('ketQua').innerText = "Vui lòng nhập đầy đủ thông tin.";
+                return;
+            }
+
+            // Tính lãi suất
+            const laiThang = laiSuatNam / 12 / 100; // Lãi suất tháng
+            const tongTien = soTien * (1 + laiThang * soThang);
+
+            // Hiển thị kết quả
+            document.getElementById('ketQua').innerText = tongTien.toLocaleString('vi-VN', {
+                style: 'currency',
+                currency: 'VND',
+            });
+        }
+    </script>
+</body>
+</html>
